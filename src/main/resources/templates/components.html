@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="template::stylesheet">
+
+    </div>
+    <style>
+.status-runnings{
+   color: #fafafa;
+
+font-size: 12px;
+
+font-weight: bold;
+
+background: red;
+
+padding: 4px 8px;
+
+border-radius: 4px;
+
+line-height: 12px;
+}
+</style>
+    <script>
+
+    $(document).ready(function () {
+        $("#action").hide();
+
+        $(".atrigger").click(function () {
+            $("#trigger").show();
+            $("#action").hide();
+            $(this).addClass('active')
+            $('.aaction').removeClass('active');
+        });
+
+        $(".aaction").click(function () {
+            $("#trigger").hide();
+            $("#action").show();
+            $(this).addClass('active')
+            $('.atrigger').removeClass('active');
+        });
+
+
+    });
+
+</script>
+
+</head>
+
+<body class="skin-blue">
+
+
+<div class="wrapper">
+
+
+    <div th:replace="template::topmenu">
+
+    </div>
+
+    <div th:replace="template::main-sidebar">
+
+    </div>
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section style="margin-top: -15px; margin-left: 23px; margin-right: 11px;"id="main">
+            <a href="/createcomponent" class="create"><span class="oi oi-plus"></span> Upload</a>
+
+
+            <br>
+            <h3>Security Functions/Services<br/>
+                <small></small>
+            </h3>
+            <ul class="secondary">
+                <li><a id="other" class="active atrigger" th:href="@{/components}">All</a></li>
+                <li><a id="menu-dashboard" class="active atrigger" th:href="@{/component-category/Monitoring}">Monitoring</a></li>
+                <li><a id="menu-applications" class="aaction" th:href="@{/component-category/Enforcement}">Enforcement</a></li>
+
+
+            </ul>
+
+            <ul  style="padding: 14px;" class="card" th:each="component : ${componentlist}">
+
+
+                <li class="component">
+                    <div class="icon"><span class="glyphicon glyphicon-asterisk"></span></div>
+
+                    <div class="actions pull-right">
+
+                        <a th:href="@{/component/{id}/edit(id=${component.id})}"><span
+                                class="glyphicon glyphicon-pencil"></span></a>
+                        <a  th:href="@{/component/{id}/delete(id=${component.id})}" th:onclick="'deleteComponentHandler(\'' + ${component.id} + '\')'" class="btn text-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                    </div>
+
+                    <div class="title"><a th:text="${component.name}"></span></a>
+                        <span class="status-running" th:if="${component.status}">Enabled</span>
+                        <span class="status-runnings" th:unless="${component.status}">Disable</span>
+                    </div>
+
+                    <hr/>
+
+                    <div class="meta">ID: <span th:text="${component.id}"></span></div>
+                    <div class="desc">
+                        <p th:text="${component.description}"> </p>
+                    </div>
+                    <ul class="label" style="display:inline">
+                        <li class="value" th:text="${component.catageory}"></li>
+                    </ul>
+                    <div class="pull-right" style="position: relative; bottom: 30px;">
+                        <ul class="label" style="display:inline">
+                            <li class="value key"> 	Registration Date</li><li class="value exp" th:text="${component.createdDate}"></li></ul><br/>
+
+                    </div>
+
+
+                </li>
+            </ul>
+
+
+
+        </section>
+
+    </div>
+
+
+
+
+    <div th:replace="template::footer">
+    </div>
+
+
+    <div th:replace="template::script">
+
+    </div>
+</div>
+</body>
+
+</html>
