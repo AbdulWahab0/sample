@@ -699,7 +699,7 @@ fill: red;
 
 .edge.all text {
 display: block;
-font-size: 16px;
+font-size: 11px;
 text-anchor: middle;
 fill: black;
 }
@@ -907,10 +907,10 @@ fill: black;
                     <div class="icon"><span class="fa fa-bolt"></span></div>
 
                     <div  class="actions pull-right">
-                        <a id="deploys" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
+                        <a href="/graphdeploy" id="deploys" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
 
                         <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                        <a  class="btn text-success" ><span class="fa fa-bars" onclick="myFunction()"> Graph</span></a>
+                        <a  href="/graph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
 
 
 
@@ -944,10 +944,7 @@ fill: black;
                <!-- <div class="alchemy" id="alchemy"></div>-->
             </ul>
 
-           <!--<ul id="template">
-            <div class="alchemy" id="alchemy"></div>
 
-           </ul>-->
             <ul id="template" class="card"  th:each="graph : ${servicegraph}">
 
 
@@ -960,13 +957,13 @@ fill: black;
                             <a id="deploy" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
 
                             <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                            <a  class="btn text-success" ><span class="fa fa-bars" onclick="myFunction()"> Graph</span></a>
+                            <a href="/graph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
 
 
 
                         </div>
 
-                    <div class="alchemy" id="alchemy"></div>
+
                     <div class="title">Name:<a>
                         <span th:text="${graph.name}"></span></a>
 
@@ -989,7 +986,8 @@ fill: black;
 
 
                 </li>
-
+                <hr>
+                <div class="alchemy" id="alchemy"></div>
 
 
 

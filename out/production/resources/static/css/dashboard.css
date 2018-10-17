@@ -1815,9 +1815,7 @@ th, td {
     padding: 5px;
 }
 
-.table > tbody > tr > td:last-child {
-    text-align: right;
-}
+
 .table > tbody > tr.try-delete {
     background-color: #f1c0c0;
 }

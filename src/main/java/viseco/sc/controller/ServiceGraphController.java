@@ -37,10 +37,21 @@ public class ServiceGraphController {
     public  String ServiceGraphcall(GraphInfo graphInfo)
 
     {
-
-
-
         return "application";
+
+    }
+    @RequestMapping("/graph")
+    public  String Graph(GraphInfo graphInfo)
+
+    {
+    return "graph";
+
+    }
+    @RequestMapping("/graphdeploy")
+    public  String Graphdeploy(GraphInfo graphInfo)
+
+    {
+        return "deploygraph";
 
     }
 
