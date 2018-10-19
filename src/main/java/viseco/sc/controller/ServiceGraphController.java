@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import viseco.sc.helper.AjaxResponse;
 import viseco.sc.helper.Edge;
@@ -23,7 +27,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ServiceGraphController {
@@ -48,15 +54,10 @@ public class ServiceGraphController {
 
     }
     @RequestMapping("/graphdeploy")
-    public  String Graphdeploy(GraphInfo graphInfo)
+    public  String Graphdeploy(Model model)
 
     {
-        return "deploygraph";
 
-    }
-
-    @RequestMapping("/service-graph")
-    public ResponseEntity<AjaxResponse> getServiceGraphData(GraphInfo graphInfo) {
         ServiceGraph serviceGraph = null;
         List<viseco.sc.helper.GraphNode> nodes = new ArrayList<>();
         List<viseco.sc.helper.Edge> edges = new ArrayList<>();
@@ -67,61 +68,85 @@ public class ServiceGraphController {
         List<GraphInfo> graph = serviceGraphRepository.findAll();
         String xmlData = graph.get(0).getXml();
         try {
-            int i = 0;
             JAXBContext jaxbContext = JAXBContext.newInstance(ServiceGraph.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             StringReader reader = new StringReader(xmlData);
             serviceGraph = (ServiceGraph) unmarshaller.unmarshal(reader);
+            List<Component> component = componentRespository.findAll();
+            int j = 0;
 
             for (viseco.sc.xmlconversion.GraphNode node : serviceGraph.getGraphNodeDescriptor().getGraphNodes()) {
-                //List<Dependency> dependencies =serviceGraph.getGraphNodeDescriptor().getGraphNodes().get(0).getGraphDependencies()
+                if (node.getNid().equals(component.get(j).getId())) {
 
-                List<Component> component = componentRespository.findAll();
+                   // model.addAttribute("componentlist", component.get(j).getName());
 
+                    model.addAttribute("componentlist",componentRespository.findAll());
 
-
-                //for (Component component:componentRespository.findAll()) {
-                    if (node.getGraphDependencies() == null) {
-                        //if (node.getNid().equals(component.getId())) {
-                        viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(),component.get(1).getName());
-                        nodes.add(newNode);
-                    } else {
-
-
-                        viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(),component.get(1).getName() );
-                        nodes.add(newNode);
-                        for (viseco.sc.xmlconversion.GraphDependency Dep : node.getGraphDependencies()) {
-
-
-                            viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(component.get(1).getId(), Dep.getNid(), "Require");
-
-
-                            //Edge edge = new Edge(i, 0, "Require");
-
-                            edges.add(edge);
-
-
-                            //}
-                            //i++;
-
-                        }
-                    //}
                 }
+                j++;
             }
-
-
-
-
-
-
 
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok(new AjaxResponse("test Graph", nodes, edges));
+        return "deploygraph";
 
 
     }
 
+    @PostMapping("/deploy")
+
+    public String savegraph(@ModelAttribute Component component, BindingResult result) {
+
+        componentRespository.save(component);
+        return "redirect:/components";
     }
+
+
+   @RequestMapping("/service-graph")
+   public ResponseEntity<AjaxResponse> getServiceGraphData(GraphInfo graphInfo) {
+       ServiceGraph serviceGraph = null;
+       List<viseco.sc.helper.GraphNode> nodes = new ArrayList<>();
+       List<viseco.sc.helper.Edge> edges = new ArrayList<>();
+       List<Component> componentList=componentRespository.findAll();
+       //String id=componentList.get(0).getId();
+       //List<Edge> edges = new ArrayList<>();
+
+       List<GraphInfo> graph = serviceGraphRepository.findAll();
+       String xmlData = graph.get(0).getXml();
+       try {
+           JAXBContext jaxbContext = JAXBContext.newInstance(ServiceGraph.class);
+           Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+           StringReader reader = new StringReader(xmlData);
+           serviceGraph = (ServiceGraph) unmarshaller.unmarshal(reader);
+
+           List<Component> component = componentRespository.findAll();
+           int j = 0;
+
+           for (viseco.sc.xmlconversion.GraphNode node : serviceGraph.getGraphNodeDescriptor().getGraphNodes()) {
+               if (node.getNid().equals(component.get(j).getId())) {
+                   if (node.getGraphDependencies() == null) {
+                       viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(), component.get(j).getName());
+                       nodes.add(newNode);
+                   } else {
+                       viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(), component.get(j).getName());
+                       nodes.add(newNode);
+                       for (viseco.sc.xmlconversion.GraphDependency Dep : node.getGraphDependencies()) {
+                           viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(component.get(j).getId(), Dep.getNid(), "Require");
+                           edges.add(edge);
+                       }
+                   }
+               }
+               j++;
+           }
+       } catch (JAXBException e) {
+           e.printStackTrace();
+       }
+       return ResponseEntity.ok(new AjaxResponse("test Graph", nodes, edges));
+
+
+   }
+
+    }
+

@@ -911,15 +911,20 @@ fill: black;
             <div style="background-color:#fff;padding: 39px;" class="wrapper">
 
 
-                <form th:action="@{/component/create}"  th:object="${component}" method="POST">
+                <form th:action="@{/component/create}" >
 
 
                     <div class="form-group">
                         <label for="Componnets">Select your Componnets</label>
                         <select name="Componnets"  class="form-control" id="Componnets">
-                            <option th:value="Monitoring">Monitoring</option>
-                            <option th:value="Enforcement">Enforcement</option>
-                            <option th:value="MonitoringEnforcement">Monitoring & Enforcement</option>
+                            <option  th:each="component: ${componentlist}"
+
+                                    th:text="${component.name}"
+
+
+
+                            ></option>
+
                         </select>
                     </div>
                     <div class="form-group">

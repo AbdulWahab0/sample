@@ -40,18 +40,14 @@ dependencies {
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-
-	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework:spring-messaging")
     compile("org.springframework.boot:spring-boot-starter-websocket:1.2.7.RELEASE")
     compile("org.springframework.boot:spring-boot-devtools")
-
-    compile ("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile 'org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE'
-    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
-
-    compile ("org.neo4j', name: 'neo4j', version: '3.5.0-alpha09")
-
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE")
+    compile("group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'")
+    compile("org.neo4j', name: 'neo4j', version: '3.5.0-alpha09")
     compile("org.apache.httpcomponents:httpasyncclient")
     compile("org.openbaton:sdk:5.1.2")
 	compile("org.webjars:bootstrap:3.3.7")
