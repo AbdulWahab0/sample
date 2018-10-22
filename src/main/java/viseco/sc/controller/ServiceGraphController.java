@@ -9,18 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import viseco.sc.helper.AjaxResponse;
 import viseco.sc.helper.Edge;
 import viseco.sc.helper.GraphNode;
 import viseco.sc.model.document.Component;
 import viseco.sc.model.document.GraphDependency;
+import viseco.sc.model.document.GraphDeploy;
 import viseco.sc.model.document.GraphInfo;
 import viseco.sc.model.repository.ComponentRespository;
 import viseco.sc.model.repository.ServiceGraphRepository;
 import viseco.sc.xmlconversion.ServiceGraph;
+import viseco.sc.message.Response;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -32,12 +32,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+
+
 public class ServiceGraphController {
     private static final Logger logger = LoggerFactory.getLogger(GraphInfo.class);
     @Autowired
     ServiceGraphRepository serviceGraphRepository;
     @Autowired
     ComponentRespository componentRespository;
+
+    List<GraphDeploy> graphDeploys=new ArrayList<GraphDeploy>();
 
     @RequestMapping("/servicegraph")
     public  String ServiceGraphcall(GraphInfo graphInfo)
@@ -101,6 +105,19 @@ public class ServiceGraphController {
 
         componentRespository.save(component);
         return "redirect:/components";
+    }
+    @GetMapping(value = "/all")
+    public Response getResource() {
+        Response response = new Response("Done", graphDeploys);
+
+        return response;
+    }
+    @PostMapping(value = "/save")
+    public Response postGraph(@RequestBody GraphDeploy graphDeploy) {
+        graphDeploys.add(graphDeploy);
+
+        Response response = new Response("Done", graphDeploy);
+        return response;
     }
 
 
