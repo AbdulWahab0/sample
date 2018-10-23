@@ -6,21 +6,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import viseco.sc.helper.AjaxResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
 import viseco.sc.helper.Edge;
 import viseco.sc.helper.GraphNode;
-import viseco.sc.model.document.Component;
-import viseco.sc.model.document.GraphDependency;
-import viseco.sc.model.document.GraphDeploy;
-import viseco.sc.model.document.GraphInfo;
+import viseco.sc.model.document.*;
 import viseco.sc.model.repository.ComponentRespository;
+import viseco.sc.model.repository.ServiceGraphInstanceRespository;
 import viseco.sc.model.repository.ServiceGraphRepository;
 import viseco.sc.xmlconversion.ServiceGraph;
 import viseco.sc.message.Response;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -40,6 +42,9 @@ public class ServiceGraphController {
     ServiceGraphRepository serviceGraphRepository;
     @Autowired
     ComponentRespository componentRespository;
+    @Autowired
+    ServiceGraphInstanceRespository serviceGraphInstanceRespository;
+
 
     List<GraphDeploy> graphDeploys=new ArrayList<GraphDeploy>();
 
@@ -56,6 +61,25 @@ public class ServiceGraphController {
     {
     return "graph";
 
+    }
+    @PostMapping("/savedeploygraph")
+
+    public String saveDeploydata(@ModelAttribute ServiceGraphInstance serviceGraphInstance, BindingResult result) {
+
+        //componentRespository.save(serviceGraphInstance);
+        // read json and write to db
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List<ServiceGraphInstance>> typeReference = new TypeReference<List<ServiceGraphInstance>>(){};
+        InputStream inputStream = TypeReference.class.getResourceAsStream("/json/users.json");
+        try {
+            List<ServiceGraphInstance> serviceGraphInstances = mapper.readValue(inputStream,typeReference);
+            serviceGraphInstanceRespository.save(serviceGraphInstances);
+            System.out.println("Users Saved!");
+        } catch (IOException e){
+            System.out.println("Unable to save users: " + e.getMessage());
+        }
+
+        return "redirect:/components";
     }
     @RequestMapping("/graphdeploy")
     public  String Graphdeploy(Model model)

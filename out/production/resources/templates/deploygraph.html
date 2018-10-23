@@ -933,12 +933,12 @@ $(document).ready(function() {
             <div style="background-color:#fff;padding: 39px;" class="wrapper">
 
 
-                <form id="customerForm">
+                <form id="customerForm" th:action="@{/savedeploygraph}"  method="POST">
 
 
                     <div class="form-group">
-                        <label for="Componnets">Select your Componnets</label>
-                        <select name="Componnets"  class="form-control" id="Componnets">
+                        <label for="name">Select your Componnets</label>
+                        <select name="name"  class="form-control" id="name">
                             <option  th:each="component: ${componentlist}"
 
                                     th:text="${component.name}"></option>
@@ -962,26 +962,18 @@ $(document).ready(function() {
                     </div>
                     <div class="form-group">
                         <label for="Protocol">Select your Protocol</label>
-                        <select name="Protocol"  class="form-control" id="Protocol">
+                        <select name="protocol"  class="form-control" id="Protocol">
                             <option th:value="TCP">TCP</option>
                             <option th:value="HTTP">HTTP</option>
                             <option th:value="FTP">FTP</option>
                             <option th:value="SMTP">SMTP</option>
                         </select>
                     </div>
-
-
-
-
-
-
-</Br>
-
-
+                    </Br>
                     <button type="button" id="btnAdd"  class="btn btn-primary btn-sm">Add</button>
 
 
-</Br>
+                </Br>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box">
