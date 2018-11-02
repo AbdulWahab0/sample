@@ -1,5 +1,8 @@
 package viseco.sc.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.sun.tools.classfile.Dependency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import viseco.sc.helper.Edge;
 import viseco.sc.helper.GraphNode;
 import viseco.sc.model.document.*;
-import viseco.sc.model.repository.ComponentRespository;
-import viseco.sc.model.repository.ServiceGraphInstanceRespository;
-import viseco.sc.model.repository.ServiceGraphRepository;
+import viseco.sc.model.repository.*;
 import viseco.sc.xmlconversion.ServiceGraph;
 import viseco.sc.message.Response;
 import java.io.IOException;
@@ -34,8 +35,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-
-
 public class ServiceGraphController {
     private static final Logger logger = LoggerFactory.getLogger(GraphInfo.class);
     @Autowired
@@ -44,6 +43,15 @@ public class ServiceGraphController {
     ComponentRespository componentRespository;
     @Autowired
     ServiceGraphInstanceRespository serviceGraphInstanceRespository;
+    @Autowired
+    NSDinfoRepository NsDinfoRepository;
+    @Autowired
+    VNFDInfoRepository vnfdInfoRepository;
+    @Autowired
+    GraphDeployvnfRepository graphDeployvnfRepository;
+    @Autowired
+    ServiceGraphsrRepository serviceGraphsrRepository;
+
 
 
     List<GraphDeploy> graphDeploys=new ArrayList<GraphDeploy>();
@@ -57,26 +65,41 @@ public class ServiceGraphController {
     }
     @RequestMapping("/graph")
     public  String Graph(GraphInfo graphInfo)
-
     {
     return "graph";
 
     }
     @PostMapping("/savedeploygraph")
 
-    public String saveDeploydata(@ModelAttribute ServiceGraphInstance serviceGraphInstance, BindingResult result) {
+    public String readjasonfile() {
 
-        //componentRespository.save(serviceGraphInstance);
+
         // read json and write to db
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<ServiceGraphInstance>> typeReference = new TypeReference<List<ServiceGraphInstance>>(){};
-        InputStream inputStream = TypeReference.class.getResourceAsStream("/json/users.json");
+        TypeReference<List<NSDInfo>> typeReference = new TypeReference<List<NSDInfo>>(){};
+        InputStream inputStream = TypeReference.class.getResourceAsStream("/json/astridapp.json");
+
+     int i =0 ;
+
         try {
-            List<ServiceGraphInstance> serviceGraphInstances = mapper.readValue(inputStream,typeReference);
-            serviceGraphInstanceRespository.save(serviceGraphInstances);
-            System.out.println("Users Saved!");
+            List<NSDInfo> nsdInfos = mapper.readValue(inputStream,typeReference);
+
+            NsDinfoRepository.saveAll(nsdInfos);
+
+            List<NSDInfo> nsdInfoss= (List<NSDInfo>) NsDinfoRepository.findAll();
+            List<VNFDInfo> vnfdInfossss= new ArrayList<VNFDInfo>();
+
+            vnfdInfossss = nsdInfoss.get(3).getVnfd();
+
+
+
+            vnfdInfoRepository.saveAll( vnfdInfossss);
+
+
+
+            System.out.println("graph Saved!");
         } catch (IOException e){
-            System.out.println("Unable to save users: " + e.getMessage());
+            System.out.println("Unable to save graph: " + e.getMessage());
         }
 
         return "redirect:/components";
@@ -104,7 +127,7 @@ public class ServiceGraphController {
             int j = 0;
 
             for (viseco.sc.xmlconversion.GraphNode node : serviceGraph.getGraphNodeDescriptor().getGraphNodes()) {
-                if (node.getNid().equals(component.get(j).getId())) {
+                if (node.getNodeId().equals(component.get(j).getId())) {
 
                    // model.addAttribute("componentlist", component.get(j).getName());
 
@@ -125,9 +148,9 @@ public class ServiceGraphController {
 
     @PostMapping("/deploy")
 
-    public String savegraph(@ModelAttribute Component component, BindingResult result) {
+    public String savegraph(@ModelAttribute GraphDeploy graphDeploy, BindingResult result) {
 
-        componentRespository.save(component);
+        graphDeployvnfRepository.save(graphDeploy);
         return "redirect:/components";
     }
     @GetMapping(value = "/all")
@@ -145,49 +168,127 @@ public class ServiceGraphController {
     }
 
 
+    @RequestMapping("/Service")
+    public String graph(Model model) {
+
+        model.addAttribute("graphlist", serviceGraphsrRepository.findAll());
+        return "components";
+    }
+
+
    @RequestMapping("/service-graph")
    public ResponseEntity<AjaxResponse> getServiceGraphData(GraphInfo graphInfo) {
        ServiceGraph serviceGraph = null;
        List<viseco.sc.helper.GraphNode> nodes = new ArrayList<>();
        List<viseco.sc.helper.Edge> edges = new ArrayList<>();
        List<Component> componentList=componentRespository.findAll();
+
        //String id=componentList.get(0).getId();
        //List<Edge> edges = new ArrayList<>();
 
        List<GraphInfo> graph = serviceGraphRepository.findAll();
        String xmlData = graph.get(0).getXml();
+
        try {
            JAXBContext jaxbContext = JAXBContext.newInstance(ServiceGraph.class);
            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
            StringReader reader = new StringReader(xmlData);
            serviceGraph = (ServiceGraph) unmarshaller.unmarshal(reader);
 
+           ObjectMapper mapperObj = new ObjectMapper();
+
+               // get serviceGraph object as a json string
+              String json  = mapperObj.writeValueAsString(serviceGraph);
+
+            //serviceGraphRepository.saveAll(json);
+
+
            List<Component> component = componentRespository.findAll();
            int j = 0;
 
            for (viseco.sc.xmlconversion.GraphNode node : serviceGraph.getGraphNodeDescriptor().getGraphNodes()) {
-               if (node.getNid().equals(component.get(j).getId())) {
-                   if (node.getGraphDependencies() == null) {
-                       viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(), component.get(j).getName());
-                       nodes.add(newNode);
-                   } else {
-                       viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNid(), component.get(j).getName());
-                       nodes.add(newNode);
-                       for (viseco.sc.xmlconversion.GraphDependency Dep : node.getGraphDependencies()) {
-                           viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(component.get(j).getId(), Dep.getNid(), "Require");
-                           edges.add(edge);
-                       }
-                   }
+               if (node.getNodeId().equals(component.get(j).getId())) {
+
+                   viseco.sc.helper.GraphNode newNode = new viseco.sc.helper.GraphNode(node.getNodeId(), component.get(j).getName());
+
+                   nodes.add(newNode);
+
+
+                   viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(node.getNodeId(), component.get(1).getId(), "http");
+
+                       edges.add(edge);
+
+
                }
                j++;
            }
+
+           //edges.add(edge);
        } catch (JAXBException e) {
+           e.printStackTrace();
+       }  catch (IOException e) {
+
            e.printStackTrace();
        }
        return ResponseEntity.ok(new AjaxResponse("test Graph", nodes, edges));
 
 
    }
+
+
+
+   /* @RequestMapping("/graphinstance")
+    public ResponseEntity<AjaxResponse> getServiceGraphforInstance(ServiceGraphs serviceGraphs) {
+        ServiceGraph serviceGraph = null;
+        List<viseco.sc.helper.GraphNode> nodes = new ArrayList<>();
+        List<viseco.sc.helper.Edge> edges = new ArrayList<>();
+        List<ServiceGraphs> graphjson=serviceGraphsrRepository.findAll();
+
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+
+
+            // get serviceGraph object as a json string
+            //String json  = mapper.writeValueAsString(graphjson);
+
+            //List<ServiceGraphs> serviceGraphs1 = mapper.readValue(graphjson, ServiceGraphs.class);
+
+            //serviceGraphRepository.saveAll(json);
+
+
+            List<Component> component = componentRespository.findAll();
+
+            int j = 0;
+
+            for (ServiceGraphNodes serviceGraphNodes : graphjson.get(1).getServiceGraphNodes()) {
+
+
+                //ServiceGraphNodes newNode = new ServiceGraphNodes("", component.get(j).getName());
+
+                    //nodes.add(newNode);
+
+
+                    //viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(node.getNodeId(), component.get(1).getId(), "http");
+
+                    //edges.add(edge);
+
+
+                j++;
+            }
+
+            //edges.add(edge);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }  catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(new AjaxResponse("test Graph", nodes, edges));
+
+
+    }*/
 
     }
 

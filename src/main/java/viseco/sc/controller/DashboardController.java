@@ -33,6 +33,7 @@ import viseco.sc.model.document.Component;
 import viseco.sc.model.document.GraphInfo;
 import viseco.sc.model.repository.ComponentRespository;
 import viseco.sc.model.repository.ServiceGraphRepository;
+import viseco.sc.model.repository.ServiceGraphsrRepository;
 import viseco.sc.xmlconversion.ServiceGraph;
 
 import javax.xml.bind.JAXBContext;
@@ -50,6 +51,7 @@ public class DashboardController {
     private static final Logger logger = LoggerFactory.getLogger(GraphInfo.class);
     @Autowired
     ServiceGraphRepository serviceGraphRepository;
+
 
     @RequestMapping("/")
     public String dashboard(Map<String, Object> model) {
@@ -79,7 +81,9 @@ public class DashboardController {
     public String components(Model model) {
 
             model.addAttribute("componentlist", componentRespository.findAll());
-            return "components";
+
+        return "redirect:/index";
+
     }
 
 

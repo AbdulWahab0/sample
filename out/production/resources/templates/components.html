@@ -20,6 +20,21 @@ border-radius: 4px;
 
 line-height: 12px;
 }
+.status-running{
+   color: #fafafa;
+
+font-size: 12px;
+
+font-weight: bold;
+
+background: #58b957;
+
+padding: 4px 8px;
+
+border-radius: 4px;
+
+line-height: 12px;
+}
 </style>
     <script>
 
@@ -92,23 +107,28 @@ line-height: 12px;
                         <a  th:href="@{/component/{id}/delete(id=${component.id})}" th:onclick="'deleteComponentHandler(\'' + ${component.id} + '\')'" class="btn text-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
                     </div>
 
-                    <div class="title"><a th:text="${component.name}"></span></a>
-                        <span class="status-running" th:if="${component.status}">Enabled</span>
+                    <div class="title"><a th:text="${component.name}"></a> </div>
+
+
+                    <span class="status-running" th:if="${component.status}">Enabled</span>
                         <span class="status-runnings" th:unless="${component.status}">Disable</span>
-                    </div>
 
                     <hr/>
 
                     <div class="meta">ID: <span th:text="${component.id}"></span></div>
-                    <div class="desc">
+                    <!--<div class="desc">
                         <p th:text="${component.description}"> </p>
-                    </div>
+                    </div>-->
                     <ul class="label" style="display:inline">
                         <li class="value" th:text="${component.catageory}"></li>
                     </ul>
                     <div class="pull-right" style="position: relative; bottom: 30px;">
                         <ul class="label" style="display:inline">
-                            <li class="value key"> 	Registration Date</li><li class="value exp" th:text="${component.createdDate}"></li></ul><br/>
+                            <li class="value key"> 	Registration Date</li>
+                            <li class="value exp" th:text="${component.createdDate}"></li></ul>
+
+
+
 
                     </div>
 

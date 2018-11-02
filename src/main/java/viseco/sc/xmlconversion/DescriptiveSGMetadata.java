@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DescriptiveSGMetadata {
 
-    @XmlElement(name="SGID")
+    /*@XmlElement(name="SGID")
     protected String sgid;
     @XmlElement(name="SGName")
-    protected  String sgName;
-    @XmlElement(name="SGDescription")
-    protected String sgDescriptions;
+    protected  String sgName;*/
+   /* @XmlElement(name="SGDescription")
+    protected String sgDescriptions;*/
 
-    public String getSgid() {
+    /*public String getSgid() {
         return sgid;
     }
 
@@ -30,13 +30,13 @@ public class DescriptiveSGMetadata {
 
     public void setSgName(String sgName) {
         this.sgName = sgName;
-    }
+    }*/
 
-    public String getSgDescriptions() {
+ /*   public String getSgDescriptions() {
         return sgDescriptions;
     }
 
     public void setSgDescriptions(String sgDescriptions) {
         this.sgDescriptions = sgDescriptions;
-    }
+    }*/
 }

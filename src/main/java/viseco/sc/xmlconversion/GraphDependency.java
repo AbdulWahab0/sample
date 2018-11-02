@@ -8,17 +8,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="GraphDependency")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GraphDependency {
+/*
 
     @XmlElement(name="CEPCID")
     private String cepid;
 
     @XmlElement(name="ECEPID")
     private  String ecepid;
+*/
 
-    @XmlElement(name="NID")
-    private String nid;
+    @XmlElement(name="NodeID")
+    private String nodeId;
 
-    public String getCepid() {
+  /*  public String getCepid() {
         return cepid;
     }
 
@@ -32,14 +34,14 @@ public class GraphDependency {
 
     public void setEcepid(String ecepid) {
         this.ecepid = ecepid;
+    }*/
+
+    public String getNodeId() {
+        return nodeId;
     }
 
-    public String getNid() {
-        return nid;
-    }
-
-    public void setNid(String nid) {
-        this.nid = nid;
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 }
 

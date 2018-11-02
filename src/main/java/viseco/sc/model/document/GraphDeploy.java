@@ -1,34 +1,59 @@
 package viseco.sc.model.document;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Document(collection = "SgVNF")
 public class GraphDeploy {
-    private  String name;
-    private String status;
+    @Id
+    @GeneratedValue
+    @NotNull
+    private  String id;
+    private  String source;
+    private String destination;
     private  String port;
     private String protocol;
-    public GraphDeploy(String name, String status, String port, String protocol) {
-        this.name = name;
-        this.status = status;
+
+
+    public GraphDeploy(String id, String source, String destination, String port, String protocol, String communication) {
+        this.id = id;
+        this.source = source;
+        this.destination = destination;
         this.port = port;
         this.protocol = protocol;
+        this.communication = communication;
     }
 
     public GraphDeploy() {
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSource() {
+        return source;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public String getPort() {
@@ -47,13 +72,15 @@ public class GraphDeploy {
         this.protocol = protocol;
     }
 
-    @Override
-    public String toString() {
-        return "GraphDeploy{" +
-                "name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", port='" + port + '\'' +
-                ", protocol='" + protocol + '\'' +
-                '}';
+    public String getCommunication() {
+        return communication;
     }
+
+    public void setCommunication(String communication) {
+        this.communication = communication;
+    }
+
+    private String communication;
+
+
 }

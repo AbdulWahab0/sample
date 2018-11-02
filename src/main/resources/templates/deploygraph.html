@@ -933,10 +933,10 @@ $(document).ready(function() {
             <div style="background-color:#fff;padding: 39px;" class="wrapper">
 
 
-                <form id="customerForm" th:action="@{/savedeploygraph}"  method="POST">
+                <form id="customerForm" th:action="@{/deploy}"  method="POST">
 
 
-                    <div class="form-group">
+                  <!--  <div class="form-group">
                         <label for="name">Select your Componnets</label>
                         <select name="name"  class="form-control" id="name">
                             <option  th:each="component: ${componentlist}"
@@ -944,8 +944,8 @@ $(document).ready(function() {
                                     th:text="${component.name}"></option>
 
                         </select>
-                    </div>
-                    <div class="form-group">
+                    </div>-->
+                   <!-- <div class="form-group">
                         <label for="status">Component Status</label>
                         <select name="status"  class="form-control" id="status">
                             <option th:value="Private">Private</option>
@@ -953,12 +953,19 @@ $(document).ready(function() {
 
                         </select>
                     </div>
-
-
+-->
 
                     <div class="form-group">
+                        <label>Source Node</label>
+                        <input value="FrontEnd" id="source" name="source" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination Node</label>
+                        <input id="destination" value="BackEnd" name="destination" class="form-control"/>
+                    </div>
+                    <div class="form-group">
                         <label>Port</label>
-                        <input id="port" name="port" class="form-control"/>
+                        <input id="port" name="port" value="8080" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="Protocol">Select your Protocol</label>
@@ -969,6 +976,14 @@ $(document).ready(function() {
                             <option th:value="SMTP">SMTP</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="Protocol">Secure Communication Service</label>
+                        <select name="communication"  class="form-control" id="communication">
+                            <option th:value="ServiceCommunicationService">Service Secure</option>
+
+                        </select>
+                    </div>
+
                     </Br>
                     <button type="button" id="btnAdd"  class="btn btn-primary btn-sm">Add</button>
 
@@ -1001,8 +1016,6 @@ $(document).ready(function() {
                 </form>
 
 
-                <div id="spanResult" style="margin:10px 0px 10px 0px;">
-                </div>
 
 
 

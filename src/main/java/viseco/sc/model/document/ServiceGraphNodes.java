@@ -1,16 +1,25 @@
 package viseco.sc.model.document;
 
-public class GraphDependency {
+import org.hibernate.validator.constraints.EAN;
+
+import java.util.List;
+
+public class ServiceGraphNodes {
     private String source_ID;
     private String service_ID;
     private String destination_ID;
+    private List<GraphDependency> graphDependencies;
 
 
 
-    public GraphDependency(String source_ID, String service_ID, String destination_ID) {
+    public ServiceGraphNodes(String source_ID, String service_ID, String destination_ID, List<GraphDependency> graphDependencies) {
         this.source_ID = source_ID;
         this.service_ID = service_ID;
         this.destination_ID = destination_ID;
+        this.graphDependencies = graphDependencies;
+    }
+
+    public ServiceGraphNodes() {
     }
 
     public String getSource_ID() {
@@ -35,5 +44,13 @@ public class GraphDependency {
 
     public void setDestination_ID(String destination_ID) {
         this.destination_ID = destination_ID;
+    }
+
+    public List<GraphDependency> getGraphDependencies() {
+        return graphDependencies;
+    }
+
+    public void setGraphDependencies(List<GraphDependency> graphDependencies) {
+        this.graphDependencies = graphDependencies;
     }
 }

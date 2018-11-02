@@ -11,31 +11,31 @@ import java.util.List;
 @XmlRootElement(name="GraphNode")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GraphNode {
-    @XmlElement(name="NID")
-    private String nid;
+    @XmlElement(name="NodeID")
+    private String nodeId;
 
-    @XmlElement(name="CNID")
-    private String cnid;
+    /*@XmlElement(name="CNID")
+    private String cnid;*/
 
     @XmlElement(name="GraphDependency")
     private List<GraphDependency> graphDependencies;
 
-    private  List<Component> components;
-    public String getNid() {
-        return nid;
+   /* private  List<Component> components;*/
+
+    public String getNodeId() {
+        return nodeId;
     }
 
-    public void setNid(String nid) {
-        this.nid = nid;
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
-
-    public String getCnid() {
+   /*  public String getCnid() {
         return cnid;
     }
 
     public void setCnid(String cnid) {
         this.cnid = cnid;
-    }
+    }*/
 
     public List<GraphDependency> getGraphDependencies() {
         return graphDependencies;
@@ -45,11 +45,11 @@ public class GraphNode {
         this.graphDependencies = graphDependencies;
     }
 
-    public List<Component> getComponents() {
+   /* public List<Component> getComponents() {
         return components;
-    }
+    }*/
 
-    public void setComponents(List<Component> components) {
+    /*public void setComponents(List<Component> components) {
         this.components = components;
-    }
+    }*/
 }
