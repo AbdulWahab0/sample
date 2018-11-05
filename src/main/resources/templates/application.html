@@ -901,13 +901,14 @@ fill: black;
                 
             </ul>
 
-          <!--  <ul id="instance" class="card" th:each="graph : ${servicegraph}">
+            <ul id="instance" class="card" th:each="graph : ${servicegraph}">
 
                 <li class="component">
                     <div class="icon"><span class="fa fa-bolt"></span></div>
 
                     <div  class="actions pull-right">
-                        <a href="/graphdeploy" id="deploys" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
+
+                        <a  href="/graphdeploy" class="btn text-success" ><span class="fa fa-bars"> Deploy</span></a>
 
                         <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
                         <a  href="/instancegraph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
@@ -915,53 +916,6 @@ fill: black;
 
 
                     </div>
-
-
-                    <div class="title">Name:<a>
-                        <span th:text="${graph.name}"></span></a>
-
-                        &lt;!&ndash;<span  class="status-running">RUNNING</span>&ndash;&gt;
-                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
-
-                    <hr/>
-                    <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
-                    <div class="meta">ID: <span th:text="${graph.id}"></span></div>
-
-                    <div class="meta">Created Date: <span th:text="${graph.createdDate}"></span></div>
-
-                    <div class="title">
-
-
-                        <span  class="status-running">Version</span>
-                        <span class="version" th:text="${graph.version}"></span>
-                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
-
-
-
-                </li>
-
-
-               &lt;!&ndash; <div class="alchemy" id="alchemy"></div>&ndash;&gt;
-            </ul>-->
-
-
-            <ul id="template" class="card"  th:each="graph : ${servicegraph}">
-
-
-                <!-- a href="" class="create"><span  class="glyphicon glyphicon-plus"></span> New Template</a-->
-                <br>
-                <li class="component">
-                    <div class="icon"><span class="fa fa-bolt"></span></div>
-
-                        <div  class="actions pull-right">
-                            <a id="deploy" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
-
-                            <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                            <a href="/templatedescriptors" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
-
-
-
-                        </div>
 
 
                     <div class="title">Name:<a>
@@ -982,9 +936,56 @@ fill: black;
                         <span  class="status-running">Version</span>
                         <span class="version" th:text="${graph.version}"></span>
                         <!-- span  class="status-deploy">DEPLOYING</span--></div>
+
+
+
+                </li>
+
+
+               <!-- <div class="alchemy" id="alchemy"></div>-->
+            </ul>
+
+
+            <!--<ul id="template" class="card"  th:each="graph : ${servicegraph}">
+
+
+                &lt;!&ndash; a href="" class="create"><span  class="glyphicon glyphicon-plus"></span> New Template</a&ndash;&gt;
+                <br>
+                <li class="component">
+                    <div class="icon"><span class="fa fa-bolt"></span></div>
+
+                        <div  class="actions pull-right">
+                            <a id="deploy"  href="/graphdeploy" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
+
+                            <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
+                            <a href="/templatedescriptors" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
+
+
+
+                        </div>
+
+
+                    <div class="title">Name:<a>
+                        <span th:text="${graph.name}"></span></a>
+
+                        &lt;!&ndash;<span  class="status-running">RUNNING</span>&ndash;&gt;
+                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
+
+                    <hr/>
+                    <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
+                    <div class="meta">ID: <span th:text="${graph.id}"></span></div>
+
+                    <div class="meta">Created Date: <span th:text="${graph.createdDate}"></span></div>
+
+                    <div class="title">
+
+
+                        <span  class="status-running">Version</span>
+                        <span class="version" th:text="${graph.version}"></span>
+                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
 </li>
                 <hr>
-          </ul>
+          </ul>-->
 </section>
 
 

@@ -123,12 +123,14 @@ public class ServiceGraphController {
             int j = 0;
 
             for (viseco.sc.xmlconversion.GraphNode node : serviceGraph.getGraphNodeDescriptor().getGraphNodes()) {
-                if (node.getNodeId().equals(component.get(j).getId())) {
+                if(node.getNodeId()!=null) {
+                    if (node.getNodeId().equals(component.get(j).getId())) {
 
-                    // model.addAttribute("componentlist", component.get(j).getName());
+                        // model.addAttribute("componentlist", component.get(j).getName());
 
-                    model.addAttribute("componentlist", componentRespository.findAll());
+                        model.addAttribute("componentlist", componentRespository.findAll());
 
+                    }
                 }
                 j++;
             }
@@ -147,7 +149,7 @@ public class ServiceGraphController {
     public String savegraph(@ModelAttribute GraphDeploy graphDeploy, BindingResult result) {
 
         graphDeployvnfRepository.save(graphDeploy);
-        return "redirect:/components";
+        return "redirect:/application";
     }
 
     @GetMapping(value = "/all")
