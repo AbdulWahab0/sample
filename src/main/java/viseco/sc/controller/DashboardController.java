@@ -76,13 +76,61 @@ public class DashboardController {
             return "application";
         }
     }
+    @RequestMapping("/templatedescriptors")
+    public  String templateDescriptors(Model model)
+    {
+        //ServiceGraph serviceGraph = null;
+        {
+
+
+            model.addAttribute("servicegraph", serviceGraphRepository.findAll());
+
+            return "templatedescriptors";
+        }
+    }
+    @RequestMapping("/templateGraph")
+    public  String templateGraph(Model model)
+    {
+        //ServiceGraph serviceGraph = null;
+        {
+
+
+            //model.addAttribute("servicegraph", serviceGraphRepository.findAll());
+
+            return "templategraph";
+        }
+    }
+    @RequestMapping("/instancerecords")
+    public  String InsatnceGraphcall(Model model)
+    {
+        //ServiceGraph serviceGraph = null;
+        {
+
+
+            model.addAttribute("servicegraph", serviceGraphRepository.findAll());
+
+            return "instancerecords";
+        }
+    }
+    @RequestMapping("/instancegraph")
+    public  String instanceGraph(Model model)
+    {
+        //ServiceGraph serviceGraph = null;
+        {
+
+
+            //model.addAttribute("servicegraph", serviceGraphRepository.findAll());
+
+            return "instancegraph";
+        }
+    }
 
     @RequestMapping("/components")
     public String components(Model model) {
 
             model.addAttribute("componentlist", componentRespository.findAll());
 
-        return "redirect:/index";
+        return "components";
 
     }
 

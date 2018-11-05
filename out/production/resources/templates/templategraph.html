@@ -128,7 +128,7 @@
 
     svg {
     position: absolute;
-    left: 0;
+    left: 250px;
     cursor: -webkit-grab;
     height: 100%;
     width: 100%;
@@ -176,10 +176,10 @@
     stroke: none
     }
 
-    .edge .edge-line {
+  <!--  .edge .edge-line {
     fill: none
     }
-
+-->
     .edge.active text {
     display: none;
     fill: #fff;
@@ -189,9 +189,9 @@
     z-index: 1000
     }
 
-    .edge.active.selected,.edge.active:hover {
+   <!-- .edge.active.selected,.edge.active:hover {
     cursor: pointer
-    }
+    }-->
 
     .edge.active.highlight text,.edge.active.selected text,.edge.active:hover text {
     display: block
@@ -678,7 +678,8 @@
     .alchemy text {
     font-weight: 200;
     font-size:15px;
-    text-anchor: middle;
+
+    text-anchor: end;
     fill:red;
     }
 
@@ -699,9 +700,10 @@ fill: red;
 
 .edge.all text {
 display: block;
-font-size: 16px;
+font-size: 11px;
 text-anchor: middle;
 fill: black;
+font-family: monospace;
 }
 
 
@@ -727,7 +729,7 @@ fill: black;
               forceLocked: false,
               graphHeight: function(){ return 500; },
               graphWidth: function(){ return 500; },
-              linkDistance: function(){ return 180; },
+              linkDistance: function(){ return 980; },
               nodeTypes: {"node_type":[ "Maintainer",
                                         "Contributor"]},
               nodeCaption: function(node){
@@ -740,7 +742,7 @@ fill: black;
                alchemy = new Alchemy(config);
                 $(".edge-line").css({ "stroke" : "red","stroke-width": "4","fill":"none","opacity": "4.2"});
                $("circle").css({ "fill" : "red"});
-               $(".edge.active text").css({ "fill" : "blue","dsiplay":"none"});
+               $(".edge.active text").css({ "fill" : "Grey","dsiplay":"none"});
 
               $("#alchemy").css({ "background-color" : "white", "width": "auto","height":"360px"});
               $("svg").css({ "background-color" : "white"});
@@ -896,11 +898,11 @@ fill: black;
 
             </br>
 
-         <!--   <ul class="secondary">
-                <li><a id="menu-dashboard" class="active ainstance" href="#">Instances / Records</a></li>
-                <li><a id="menu-applications" class="atemplate" href="#">Templates / Descriptors</a></li>
+            <!--   <ul class="secondary">
+                   <li><a id="menu-dashboard" class="active ainstance" href="#">Instances / Records</a></li>
+                   <li><a id="menu-applications" class="atemplate" href="#">Templates / Descriptors</a></li>
 
-            </ul>-->
+               </ul>-->
 
 
 

@@ -711,7 +711,7 @@ fill: black;
 
 
     </style>
-    <script type="text/javascript">
+  <!--  <script type="text/javascript">
 
             $(function () {
                 $.ajax({
@@ -734,7 +734,7 @@ fill: black;
               return node.name;
               }
 
-                <!--return "Name: "+node.caption + " " + node.id+" "+node.catageory;}-->
+                &lt;!&ndash;return "Name: "+node.caption + " " + node.id+" "+node.catageory;}&ndash;&gt;
                 };
 
                alchemy = new Alchemy(config);
@@ -757,7 +757,7 @@ fill: black;
 
 
   </script>
-
+-->
 
 
 
@@ -896,12 +896,12 @@ fill: black;
 
 
             <ul class="secondary">
-                <li><a id="menu-dashboard" class="active ainstance" href="#">Instances / Records</a></li>
-                <li><a id="menu-applications" class="atemplate" href="#">Templates / Descriptors</a></li>
+                <li><a id="menu-dashboard" class="active ainstance" href="instancerecords">Instances / Records</a></li>
+                <li><a id="menu-applications" class="atemplate" href="/templatedescriptors">Templates / Descriptors</a></li>
                 
             </ul>
 
-            <ul id="instance" class="card" th:each="graph : ${servicegraph}">
+          <!--  <ul id="instance" class="card" th:each="graph : ${servicegraph}">
 
                 <li class="component">
                     <div class="icon"><span class="fa fa-bolt"></span></div>
@@ -910,7 +910,7 @@ fill: black;
                         <a href="/graphdeploy" id="deploys" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
 
                         <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                        <a  href="/graph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
+                        <a  href="/instancegraph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
 
 
 
@@ -920,8 +920,8 @@ fill: black;
                     <div class="title">Name:<a>
                         <span th:text="${graph.name}"></span></a>
 
-                        <!--<span  class="status-running">RUNNING</span>-->
-                        <!-- span  class="status-deploy">DEPLOYING</span--></div>
+                        &lt;!&ndash;<span  class="status-running">RUNNING</span>&ndash;&gt;
+                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
 
                     <hr/>
                     <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
@@ -934,15 +934,15 @@ fill: black;
 
                         <span  class="status-running">Version</span>
                         <span class="version" th:text="${graph.version}"></span>
-                        <!-- span  class="status-deploy">DEPLOYING</span--></div>
+                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
 
 
 
                 </li>
 
 
-               <!-- <div class="alchemy" id="alchemy"></div>-->
-            </ul>
+               &lt;!&ndash; <div class="alchemy" id="alchemy"></div>&ndash;&gt;
+            </ul>-->
 
 
             <ul id="template" class="card"  th:each="graph : ${servicegraph}">
@@ -957,7 +957,7 @@ fill: black;
                             <a id="deploy" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
 
                             <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                            <a href="/graph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
+                            <a href="/templatedescriptors" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
 
 
 
@@ -982,43 +982,17 @@ fill: black;
                         <span  class="status-running">Version</span>
                         <span class="version" th:text="${graph.version}"></span>
                         <!-- span  class="status-deploy">DEPLOYING</span--></div>
-
-
-
-                </li>
+</li>
                 <hr>
-                <div class="alchemy" id="alchemy"></div>
-
-
-
-            </ul>
-
-
-
-
-
-
-
-
-
-        </section>
+          </ul>
+</section>
 
 
     </div>
 
 </div>
 
-<script>
-function myFunction() {
 
-    var x = document.getElementById("alchemy");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-</script>
 <div th:replace="template::footer">
 </div>
 
@@ -1030,3 +1004,14 @@ function myFunction() {
 </body>
 
 </html>
+<script>
+function myFunction() {
+
+    var x = document.getElementById("alchemy");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>

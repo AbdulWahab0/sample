@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
@@ -8,8 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/alchemy.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/scripts/vendor.js"></script>
 
-<!--Alcjemy.csss-->
-<style>
+    <!--Alcjemy.csss-->
+    <style>
 
     @-webkit-keyframes fadeIn {
     0% {
@@ -128,7 +128,7 @@
 
     svg {
     position: absolute;
-    left: 0;
+    left: 250px;
     cursor: -webkit-grab;
     height: 100%;
     width: 100%;
@@ -176,10 +176,10 @@
     stroke: none
     }
 
-    .edge .edge-line {
+  <!--  .edge .edge-line {
     fill: none
     }
-
+-->
     .edge.active text {
     display: none;
     fill: #fff;
@@ -189,9 +189,9 @@
     z-index: 1000
     }
 
-    .edge.active.selected,.edge.active:hover {
+   <!-- .edge.active.selected,.edge.active:hover {
     cursor: pointer
-    }
+    }-->
 
     .edge.active.highlight text,.edge.active.selected text,.edge.active:hover text {
     display: block
@@ -678,7 +678,8 @@
     .alchemy text {
     font-weight: 200;
     font-size:15px;
-    text-anchor: middle;
+
+    text-anchor: end;
     fill:red;
     }
 
@@ -702,6 +703,7 @@ display: block;
 font-size: 11px;
 text-anchor: middle;
 fill: black;
+font-family: monospace;
 }
 
 
@@ -711,13 +713,13 @@ fill: black;
 
 
     </style>
-  <!--  <script type="text/javascript">
+    <script type="text/javascript">
 
             $(function () {
                 $.ajax({
                     type: "GET",
                     contentType: "application/json",
-                    url: "/service-graph",
+                    url: "/instance-graph",
                     dataType: 'json',
                     cache: false,
                 success: function (result) {
@@ -734,15 +736,15 @@ fill: black;
               return node.name;
               }
 
-                &lt;!&ndash;return "Name: "+node.caption + " " + node.id+" "+node.catageory;}&ndash;&gt;
+                <!--return "Name: "+node.caption + " " + node.id+" "+node.catageory;}-->
                 };
 
                alchemy = new Alchemy(config);
                 $(".edge-line").css({ "stroke" : "red","stroke-width": "4","fill":"none","opacity": "4.2"});
                $("circle").css({ "fill" : "red"});
-               $(".edge.active text").css({ "fill" : "blue","dsiplay":"none"});
+               $(".edge.active text").css({ "fill" : "Grey","dsiplay":"none"});
 
-              $("#alchemy").css({ "background-color" : "white", "width": "auto","height":"360px","margin-top": "-16%"  });
+              $("#alchemy").css({ "background-color" : "white", "width": "auto","height":"360px"});
               $("svg").css({ "background-color" : "white"});
 
 
@@ -757,7 +759,7 @@ fill: black;
 
 
   </script>
--->
+
 
 
 
@@ -767,7 +769,7 @@ fill: black;
 
 
 
-<script>
+    <script>
 
     $(document).ready(function () {
 
@@ -779,7 +781,7 @@ fill: black;
             $("#instance").show();
             $("#template").hide();
             $(this).addClass('active')
-            $('.atemplate').removeClass('active'); 
+            $('.atemplate').removeClass('active');
             $("#topo").html("");
         });
 
@@ -791,15 +793,15 @@ fill: black;
             $('.ainstance').removeClass('active');
             $("#topo").html("");
         });
-        
+
         $("#deploy").click(function () {
         	var data='2f529fa3-62e2-47f0-8dfb-6cc2d0388908';
             $("#instance").show();
             $("#template").hide();
             $('.ainstance').addClass('active')
-            $('.atemplate').removeClass('active');    
+            $('.atemplate').removeClass('active');
             $("#nsdid").html(data);
-            
+
     		$.ajax({
 				contentType: "application/json",
 				crossDomain: true,
@@ -813,10 +815,10 @@ fill: black;
 				error : function(response) {
 					showalert("Error!!!","alert-warning");
 				}
-			});            
-            
-        });        
-        
+			});
+
+        });
+
 	    $("#showtopo").click(function(){
 
 
@@ -832,7 +834,7 @@ fill: black;
 	    	//$('#topo').append("<br>");
 	    	$('#topo').append(newFrame);
 	    	showalert("...","alert-info");
-	    });        
+	    });
 
 		var socket = new SockJS('/demo');
 		stompClient = Stomp.over(socket);
@@ -841,18 +843,18 @@ fill: black;
 			stompClient.subscribe('/data/notification', function(alarm) {
 				showalert(alarm.body,"alert-info");
 			});
-		});	    
-	
+		});
+
     });
-    
-    
+
+
 	function showalert(message,alerttype) {
 	    $('#noti').append('<div id="alertdiv" class="alert ' +  alerttype + '"><span>' + getTimeStamp() + ': ' + message + '</span></div>')
 	    setTimeout(function() { // this will automatically close the alert and remove this if the users doesnt close it in 10 secs
 	      $("#alertdiv").remove();
 	    }, 10000);
 	  }
-	  
+
 	function getTimeStamp() {
 	    var now = new Date();
 	    return ( '<strong>' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate()) + " " +
@@ -863,12 +865,11 @@ fill: black;
 		     ((now.getSeconds() < 10)
 			 ? ("0" + now.getSeconds())
 			 : (now.getSeconds())) + '</strong>');
-	} 
+	}
 
 </script>
 
 </head>
-
 <body class="skin-blue">
 
 
@@ -885,125 +886,44 @@ fill: black;
     <div class="content-wrapper">
 
         <section  style="margin-top: -15px; margin-left: 23px; margin-right: 11px;" id="main">
-
+            </br>
             <a href="/createapplication" class="create"><span class="oi oi-plus"></span> New Template</a>
 
 
-            <br>
-            <h3>Applications<br/>
-                <small></small>
+
+            <h3><a href="/application">&larr;</a> Applications<br/>
+
+                <small>Manage your Graph</small>
             </h3>
 
+            </br>
 
-            <ul class="secondary">
-                <li><a id="menu-dashboard" class="active ainstance" href="instancerecords">Instances / Records</a></li>
-                <li><a id="menu-applications" class="atemplate" href="/templatedescriptors">Templates / Descriptors</a></li>
-                
-            </ul>
+            <!--   <ul class="secondary">
+                   <li><a id="menu-dashboard" class="active ainstance" href="#">Instances / Records</a></li>
+                   <li><a id="menu-applications" class="atemplate" href="#">Templates / Descriptors</a></li>
 
-          <!--  <ul id="instance" class="card" th:each="graph : ${servicegraph}">
-
-                <li class="component">
-                    <div class="icon"><span class="fa fa-bolt"></span></div>
-
-                    <div  class="actions pull-right">
-                        <a href="/graphdeploy" id="deploys" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
-
-                        <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                        <a  href="/instancegraph" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
+               </ul>-->
 
 
 
-                    </div>
 
-
-                    <div class="title">Name:<a>
-                        <span th:text="${graph.name}"></span></a>
-
-                        &lt;!&ndash;<span  class="status-running">RUNNING</span>&ndash;&gt;
-                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
-
-                    <hr/>
-                    <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
-                    <div class="meta">ID: <span th:text="${graph.id}"></span></div>
-
-                    <div class="meta">Created Date: <span th:text="${graph.createdDate}"></span></div>
-
-                    <div class="title">
-
-
-                        <span  class="status-running">Version</span>
-                        <span class="version" th:text="${graph.version}"></span>
-                        &lt;!&ndash; span  class="status-deploy">DEPLOYING</span&ndash;&gt;</div>
+            <div class="alchemy" id="alchemy"></div>
 
 
 
-                </li>
-
-
-               &lt;!&ndash; <div class="alchemy" id="alchemy"></div>&ndash;&gt;
-            </ul>-->
-
-
-            <ul id="template" class="card"  th:each="graph : ${servicegraph}">
-
-
-                <!-- a href="" class="create"><span  class="glyphicon glyphicon-plus"></span> New Template</a-->
-                <br>
-                <li class="component">
-                    <div class="icon"><span class="fa fa-bolt"></span></div>
-
-                        <div  class="actions pull-right">
-                            <a id="deploy" class="btn text-success"><span class="fa fa-bolt"></span> Deploy</a>
-
-                            <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
-                            <a href="/templatedescriptors" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
 
 
 
-                        </div>
 
 
-                    <div class="title">Name:<a>
-                        <span th:text="${graph.name}"></span></a>
 
-                        <!--<span  class="status-running">RUNNING</span>-->
-                        <!-- span  class="status-deploy">DEPLOYING</span--></div>
-
-                    <hr/>
-                    <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
-                    <div class="meta">ID: <span th:text="${graph.id}"></span></div>
-
-                    <div class="meta">Created Date: <span th:text="${graph.createdDate}"></span></div>
-
-                    <div class="title">
-
-
-                        <span  class="status-running">Version</span>
-                        <span class="version" th:text="${graph.version}"></span>
-                        <!-- span  class="status-deploy">DEPLOYING</span--></div>
-</li>
-                <hr>
-          </ul>
-</section>
+        </section>
 
 
     </div>
 
 </div>
 
-
-<div th:replace="template::footer">
-</div>
-
-
-<div th:replace="template::script">
-
-</div>
-
-</body>
-
-</html>
 <script>
 function myFunction() {
 
@@ -1015,3 +935,13 @@ function myFunction() {
     }
 }
 </script>
+<div th:replace="template::footer">
+</div>
+
+
+<div th:replace="template::script">
+
+</div>
+
+</body>
+</html>
