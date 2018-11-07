@@ -217,7 +217,7 @@ public class ServiceGraphController {
                         nodes.add(newNode);
 
 
-                        viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(node.getNodeId(), component.get(1).getId(), "http");
+                        viseco.sc.helper.Edge edge = new viseco.sc.helper.Edge(node.getNodeId(), component.get(1).getId(), "web");
                         if (!node.getNodeId().equals(component.get(1).getId())) {
                             edges.add(edge);
                         }
@@ -315,9 +315,9 @@ public class ServiceGraphController {
 
        nodes.add(new GraphNode("5bb6235d716616bd22fd5035", "Ping"));
         nodes.add(new GraphNode("5bb6235d716616bd22fd5036", "Pong"));
-        nodes.add(new GraphNode("5bb6235d716616bd22fd5037", "Secure Service"));
-        edges.add(new Edge("5bb6235d716616bd22fd5035","5bb6235d716616bd22fd5037","require"));
-        edges.add(new Edge("5bb6235d716616bd22fd5037","5bb6235d716616bd22fd5036","require"));
+        nodes.add(new GraphNode("5bb6235d716616bd22fd5037", "Secom"));
+        edges.add(new Edge("5bb6235d716616bd22fd5035","5bb6235d716616bd22fd5037","web"));
+        edges.add(new Edge("5bb6235d716616bd22fd5037","5bb6235d716616bd22fd5036","web"));
 
 
 

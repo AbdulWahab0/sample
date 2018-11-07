@@ -954,20 +954,37 @@ $(document).ready(function() {
                         </select>
                     </div>
 -->
+                    <div class="title">Source:<a>
+                        <span> Ping </span></a>
 
-                    <div class="form-group">
+                    </div>
+                    <br>
+                    <div class="title">Destination:<a>
+                        <span> Pong </span></a>
+
+                    </div>
+                    <br>
+                    <div class="title">Communication:<a>
+                        <span> Web </span></a>
+
+                    </div>
+
+                    <br>
+
+
+                    <!--<div class="form-group">
                         <label>Source Node</label>
-                        <input value="FrontEnd" id="source" name="source" class="form-control"/>
+                       <input value="FrontEnd" id="source" name="source" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label>Destination Node</label>
                         <input id="destination" value="BackEnd" name="destination" class="form-control"/>
-                    </div>
-                    <div class="form-group">
+                    </div>-->
+                   <!-- <div class="form-group">
                         <label>Port</label>
-                        <input id="port" name="port" value="8080" class="form-control"/>
-                    </div>
-                    <div class="form-group">
+                    <input id="port" name="port" value="8080" class="form-control"/>
+                    </div>-->
+                   <!-- <div class="form-group">
                         <label for="Protocol">Select your Protocol</label>
                         <select name="protocol"  class="form-control" id="Protocol">
                             <option th:value="TCP">TCP</option>
@@ -975,9 +992,9 @@ $(document).ready(function() {
                             <option th:value="FTP">FTP</option>
                             <option th:value="SMTP">SMTP</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="form-group">
-                        <label for="Protocol">Secure Communication Service</label>
+                        <label for="Protocol" class="title">Secure Communication Service</label>
                         <select name="communication"  class="form-control" id="communication">
                             <option th:value="ServiceCommunicationService">Service Secure</option>
 
@@ -985,7 +1002,8 @@ $(document).ready(function() {
                     </div>
 
                     </Br>
-                    <button type="button" id="btnAdd"  class="btn btn-primary btn-sm">Add</button>
+                   <!-- <button type="button" id="btnAdd"  class="btn btn-primary btn-sm">Add</button>-->
+                    <button type="button"   class="btn btn-primary btn-sm">Add</button>
 
 
                 </Br>
@@ -997,10 +1015,18 @@ $(document).ready(function() {
                                 <div class="box-body table-responsive no-padding">
                                     <table id="tbl" class="table table-hover">
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                            <th>Port</th>
-                                            <th>Protocol</th>
+                                            <th>Source</th>
+
+                                            <th>Destination</th>
+                                            <th>Communication</th>
+                                            <th>Connection </th>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Ping</td>
+                                            <td>Pong</td>
+                                            <td>Web</td>
+                                            <td>Secom</td>
 
                                         </tr>
 
@@ -1025,7 +1051,8 @@ $(document).ready(function() {
 
 
     </div>
-
+    <div th:replace="template::footer">
+    </div>
 </div>
 
 <script>
@@ -1039,8 +1066,7 @@ function myFunction() {
     }
 }
 </script>
-<div th:replace="template::footer">
-</div>
+
 
 
 <div th:replace="template::script">
