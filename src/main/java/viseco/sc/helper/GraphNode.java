@@ -4,10 +4,7 @@ public class GraphNode {
     String id;
     String name;
 
-
-
-
-    public GraphNode(String id, String name){
+public GraphNode(String id, String name){
         this.id = id;
         this.name = name;
     }

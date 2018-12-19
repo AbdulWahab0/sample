@@ -13,43 +13,19 @@ import java.util.List;
 public class GraphNode {
     @XmlElement(name="NodeID")
     private String nodeId;
-
-    /*@XmlElement(name="CNID")
-    private String cnid;*/
-
     @XmlElement(name="GraphDependency")
     private List<GraphDependency> graphDependencies;
-
-   /* private  List<Component> components;*/
-
     public String getNodeId() {
         return nodeId;
     }
-
     public void setNodeId(String nodeId) {
         this.nodeId = nodeId;
     }
-   /*  public String getCnid() {
-        return cnid;
-    }
-
-    public void setCnid(String cnid) {
-        this.cnid = cnid;
-    }*/
-
     public List<GraphDependency> getGraphDependencies() {
         return graphDependencies;
     }
-
     public void setGraphDependencies(List<GraphDependency> graphDependencies) {
         this.graphDependencies = graphDependencies;
     }
 
-   /* public List<Component> getComponents() {
-        return components;
-    }*/
-
-    /*public void setComponents(List<Component> components) {
-        this.components = components;
-    }*/
 }

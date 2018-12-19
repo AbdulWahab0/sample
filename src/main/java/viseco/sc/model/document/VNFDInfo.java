@@ -20,8 +20,6 @@ public class VNFDInfo {
     private Date createdDate;
     private String lifecycle_event; //list
     //String configurations;
-
-
     public VNFDInfo(String id, String name, String vendor, String version, Date createdDate, String lifecycle_event) {
         this.id = id;
         this.name = name;
@@ -30,10 +28,7 @@ public class VNFDInfo {
         this.createdDate=createdDate;
         this.lifecycle_event = lifecycle_event;
     }
-
-    public VNFDInfo() {
-    }
-
+    public VNFDInfo() { }
     public String getId() {
         return id;
     }
@@ -61,19 +56,13 @@ public class VNFDInfo {
     public String getLifecycle_event() {
         return lifecycle_event;
     }
-
     public Date getCreatedDate() {
         return createdDate;
     }
-
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
-
     public void setLifecycle_event(String lifecycle_event) {
         this.lifecycle_event = lifecycle_event;
     }
-
-
-
 }

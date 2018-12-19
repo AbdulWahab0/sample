@@ -1,4 +1,4 @@
-package viseco.sc.Config;
+package viseco.sc.config;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

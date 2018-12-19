@@ -14,7 +14,6 @@ public class NSDInfo {
     private String version;
     private String vnf_dependency; //list
     private List<VNFDInfo> vnfd;
-
     public NSDInfo(String id, String name, String vendor, String updateAt, String version, String vnf_dependency, List<VNFDInfo> vnfd) {
         this.id = id;
         this.name = name;
@@ -24,10 +23,7 @@ public class NSDInfo {
         this.vnf_dependency = vnf_dependency;
         this.vnfd = vnfd;
     }
-
-    public NSDInfo() {
-    }
-
+    public NSDInfo() { }
     public String getId() {
         return id;
     }

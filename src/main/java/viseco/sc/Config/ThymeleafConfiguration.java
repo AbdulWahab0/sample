@@ -1,4 +1,4 @@
-package viseco.sc.Config;
+package viseco.sc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
