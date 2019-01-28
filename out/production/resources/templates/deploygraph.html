@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/alchemy.min.css" />
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/alchemy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/scripts/vendor.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <div th:replace="template::stylesheet"></div>
+    <script>
+    $(document).ready(function () {
+    $("#alchemy").hide();
+        $("#template").hide();
+    $(".ainstance").click(function () {
+            $("#instance").show();
+            $("#template").hide();
+            $(this).addClass('active')
+            $('.atemplate').removeClass('active');
+            $("#topo").html("");
+        });
+
+        $(".atemplate").click(function () {
+            $("#instance").hide();
+            $("#template").show();
+            $("#alchemy").hide();
+            $(this).addClass('active')
+            $('.ainstance').removeClass('active');
+            $("#topo").html("");
+        });
+
+        $("#deploy").click(function () {
+        	var data='2f529fa3-62e2-47f0-8dfb-6cc2d0388908';
+            $("#instance").show();
+            $("#template").hide();
+            $('.ainstance').addClass('active')
+            $('.atemplate').removeClass('active');
+            $("#nsdid").html(data);
+
+    		$.ajax({
+				contentType: "application/json",
+				crossDomain: true,
+				type : "GET",
+				url : "/orch/deploy/" + data,
+				data : data,
+				success : function(response) {
+					showalert("Deploying 'HeartRateMonitoring' application ...","alert-warning");
+
+				},
+				error : function(response) {
+					showalert("Error!!!","alert-warning");
+				}
+			});
+
+        });
+
+	    $("#showtopo").click(function(){
+
+
+	    	//var divContent = $('#topo').text();
+	    	//alert(divContent);
+	    	$("#topo").html("");
+	    	newFrame = document.createElement("iframe");
+	    	newFrame.setAttribute("src", "out.html");
+	    	newFrame.setAttribute("width", "800");
+	    	newFrame.setAttribute("height", "400");
+	    	newFrame.setAttribute("frameborder", "0");
+	    	newFrame.setAttribute("scrolling", "no");
+	    	//$('#topo').append("<br>");
+	    	$('#topo').append(newFrame);
+	    	showalert("...","alert-info");
+	    });
+
+		var socket = new SockJS('/demo');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/data/notification', function(alarm) {
+				showalert(alarm.body,"alert-info");
+			});
+		});
+
+    });
+
+
+	function showalert(message,alerttype) {
+	    $('#noti').append('<div id="alertdiv" class="alert ' +  alerttype + '"><span>' + getTimeStamp() + ': ' + message + '</span></div>')
+	    setTimeout(function() { // this will automatically close the alert and remove this if the users doesnt close it in 10 secs
+	      $("#alertdiv").remove();
+	    }, 10000);
+	  }
+
+	function getTimeStamp() {
+	    var now = new Date();
+	    return ( '<strong>' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate()) + " " +
+		     now.getHours() + ':' +
+		     ((now.getMinutes() < 10)
+			 ? ("0" + now.getMinutes())
+			 : (now.getMinutes())) + ':' +
+		     ((now.getSeconds() < 10)
+			 ? ("0" + now.getSeconds())
+			 : (now.getSeconds())) + '</strong>');
+	}
+
+</script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $('#btnAdd').click(function() {
+    var Components=$('#Componnets option:selected').val()
+      var status = $('#status option:selected').val();
+            var Protocol = $('#Protocol option:selected').val();
+            var port= $('#port').val();
+     $('#tbl').append("<tr><td>"+Components+"</td><td>"+status+"</td><td>"+Protocol+"</td><td>"+port+"</td></tr>");
+
+    });
+});
+</script>
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+    <div th:replace="template::topmenu"></div>
+    <div th:replace="template::main-sidebar"></div>
+    <div class="content-wrapper">
+        <section  style="margin-top: -15px; margin-left: 23px; margin-right: 11px;" id="main">
+            </br>
+            <a href="/createapplication" class="create"><span class="oi oi-plus"></span> New Template</a>
+            <h3><a href="/application">&larr;</a> Applications<br/>
+                <small>Deploy your Graph</small>
+            </h3>
+            </br>
+            <div style="background-color:#fff;padding: 39px;" class="wrapper">
+                <form id="customerForm" th:action="@{/deploy}"  method="POST">
+                    <div class="title">Source:<a>
+                        <span> Ping </span></a>
+                    </div>
+                    <br>
+                    <div class="title">Destination:<a>
+                        <span> Pong </span></a>
+                    </div>
+                    <br>
+                    <div class="title">Communication:<a>
+                        <span> Web </span></a>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="Protocol" class="title">Secure Communication Service</label>
+                        <select name="communication"  class="form-control" id="communication">
+                            <option th:value="Secom">Secom</option>
+                        </select>
+                    </div>
+                    </Br>
+                   <!-- <button type="button" id="btnAdd"  class="btn btn-primary btn-sm">Add</button>-->
+                    <button type="button"   class="btn btn-primary btn-sm">Add</button>
+                    </Br>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-body table-responsive no-padding">
+                                    <table id="tbl" class="table table-hover">
+                                        <tr>
+                                            <th>Source</th>
+                                            <th>Destination</th>
+                                            <th>Communication</th>
+                                            <th>Connection </th>
+                                        </tr>
+                                        <tr>
+                                            <td>Ping</td>
+                                            <td>Pong</td>
+                                            <td>Web</td>
+                                            <td>Secom</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" th:value="Submit" class="btn btn-danger btn-sm">Deploy</button>
+                </form>
+            </div>
+</section>
+    </div>
+    <div th:replace="template::footer"></div>
+</div>
+
+<script>
+function myFunction() {
+
+    var x = document.getElementById("alchemy");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+<div th:replace="template::script"></div>
+</body>
+</html>

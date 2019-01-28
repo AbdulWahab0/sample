@@ -1,0 +1,18 @@
+server:
+  port: 7751
+
+logging:
+  level:
+    ROOT: INFO
+
+nfvo:
+  ip: 130.149.80.37
+  port: 8080
+  projectid: f3c34d57-7881-478a-a8f6-00e798c57db2
+  apiuri: http://130.149.80.37:8080/api/v1
+  servicename: nfvo
+  servicekey: hb2WpJGD1VDpTAi8
+  serviceuri: http://130.149.167.12:7751
+
+
+

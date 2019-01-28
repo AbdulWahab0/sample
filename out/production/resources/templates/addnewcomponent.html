@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="template::stylesheet">
+
+    </div>
+
+
+</head>
+
+<body class="skin-blue">
+
+
+<div class="wrapper">
+
+
+    <div th:replace="template::topmenu">
+
+    </div>
+
+    <div th:replace="template::main-sidebar">
+
+    </div>
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section style="margin-top: -15px; margin-left: 23px;padding: 23px; margin-right: 11px;"id="main">
+
+            <h3>Upload a component<br/>
+                <small></small>
+            </h3>
+
+
+            <div style="background-color:#fff;padding: 39px;" class="wrapper">
+
+
+                <form th:action="@{/component/create}"  th:object="${component}"  method="POST">
+                    <div class="form-group">
+                        <label>Component Name</label>
+                        <input id="userName"  name="userName" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                    </div>
+
+
+                    </br>
+                    <div class="form-group">
+                        <label for="des">Components Description</label>
+                        <textarea class="form-control" name="des" id="des" rows="3"></textarea>
+                    </div>
+                   <div class="form-group">
+                       <label>Configuration Parameters</label>
+                       <input id="ConfigurationParameters"  name="ConfigurationParameters" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Required Chainable Endpoints</label>
+                       <input id="RequiredChainableEndpoints"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Exposed Chainable Endpoints</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Beharioral Parameter</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Execution Requirements</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label> Configuration Parameter Name</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label for="description">Configuration Paramater Description</label>
+                       <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                   </div>
+                   <div class="form-group">
+                       <label> Configuration Parameter Type (String)</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Configuration Parameter Default Value</label>
+                       <input id="name"  name="name" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Metric Name</label>
+                       <input id="metricName"  name="metricName" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label for="description">Metric Description</label>
+                       <textarea class="form-control" name="metricDescription" id="metricDescription" rows="3"></textarea>
+                   </div>
+                   <div class="form-group">
+                       <label>Unit Of Measurement</label>
+                       <input id="unitOfMeasurement"  name="unitOfMeasurement" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Metric Value Type(String/Interger)</label>
+                       <input id="metricValueType"  name="metricValueType" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Min Value</label>
+                       <input id="minValue"  name="minValue" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+                   <div class="form-group">
+                       <label>Max Value</label>
+                       <input id="maxValue"  name="maxValue" class="form-control"/>
+                       <!-- <input th:if="${id}" type="hidden" id="id" th:field="*{id}" name="id" class="form-control"/>-->
+                   </div>
+
+
+
+
+
+
+
+                    <button type="submit" th:value="Submit" class="btn btn-primary">Submit</button>
+                </form>
+
+
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+</div>
+</div><!-- /.box -->
+
+
+</div>
+
+<div th:replace="template::footer">
+</div>
+
+
+<div th:replace="template::script">
+
+</div>
+
+</body>
+
+</html>

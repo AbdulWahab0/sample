@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/alchemy.min.css" />
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/alchemy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alchemyjs/0.4.2/scripts/vendor.js"></script>
+    <div th:replace="template::stylesheet"></div>
+    <script>
+            $(document).ready(function () {
+            $("#alchemy").hide();
+            $("#template").hide();
+            $(".ainstance").click(function () {
+            $("#instance").show();
+            $("#template").hide();
+            $(this).addClass('active')
+            $('.atemplate').removeClass('active');
+            $("#topo").html("");
+        });
+
+        $(".atemplate").click(function () {
+            $("#instance").hide();
+            $("#template").show();
+            $("#alchemy").hide();
+            $(this).addClass('active')
+            $('.ainstance').removeClass('active');
+            $("#topo").html("");
+        });
+
+        $("#deploy").click(function () {
+        	var data='2f529fa3-62e2-47f0-8dfb-6cc2d0388908';
+            $("#instance").show();
+            $("#template").hide();
+            $('.ainstance').addClass('active')
+            $('.atemplate').removeClass('active');
+            $("#nsdid").html(data);
+
+    		$.ajax({
+				contentType: "application/json",
+				crossDomain: true,
+				type : "GET",
+				url : "/orch/deploy/" + data,
+				data : data,
+				success : function(response) {
+					showalert("Deploying 'HeartRateMonitoring' application ...","alert-warning");
+
+				},
+				error : function(response) {
+					showalert("Error!!!","alert-warning");
+				}
+			});
+
+        });
+
+	    $("#showtopo").click(function(){
+
+
+	    	//var divContent = $('#topo').text();
+	    	//alert(divContent);
+	    	$("#topo").html("");
+	    	newFrame = document.createElement("iframe");
+	    	newFrame.setAttribute("src", "out.html");
+	    	newFrame.setAttribute("width", "800");
+	    	newFrame.setAttribute("height", "400");
+	    	newFrame.setAttribute("frameborder", "0");
+	    	newFrame.setAttribute("scrolling", "no");
+	    	//$('#topo').append("<br>");
+	    	$('#topo').append(newFrame);
+	    	showalert("...","alert-info");
+	    });
+
+		var socket = new SockJS('/demo');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/data/notification', function(alarm) {
+				showalert(alarm.body,"alert-info");
+			});
+		});
+
+    });
+    function showalert(message,alerttype) {
+	    $('#noti').append('<div id="alertdiv" class="alert ' +  alerttype + '"><span>' + getTimeStamp() + ': ' + message + '</span></div>')
+	    setTimeout(function() { // this will automatically close the alert and remove this if the users doesnt close it in 10 secs
+	      $("#alertdiv").remove();
+	    }, 10000);
+	  }
+	  	function getTimeStamp() {
+	    var now = new Date();
+	    return ( '<strong>' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate()) + " " +
+		     now.getHours() + ':' +
+		     ((now.getMinutes() < 10)
+			 ? ("0" + now.getMinutes())
+			 : (now.getMinutes())) + ':' +
+		     ((now.getSeconds() < 10)
+			 ? ("0" + now.getSeconds())
+			 : (now.getSeconds())) + '</strong>');
+	}
+</script>
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+    <div th:replace="template::topmenu"></div>
+    <div th:replace="template::main-sidebar"></div>
+    <div class="content-wrapper">
+        <section  style="margin-top: -15px; margin-left: 23px; margin-right: 11px;" id="main">
+            </br>
+            <h3>Service Graph<br/>
+                <small></small>
+            </h3>
+            <ul class="secondary">
+                <li><a id="menu-dashboard" class="active ainstance" href="/networkServiceGraph">Network Services</a></li>
+                <li><a id="menu-applications" class="atemplate" href="/applicationServiceGraph">Application Services</a></li>
+            </ul>
+           <!-- <ul id="instance" class="card" th:each="graph : ${servicegraph}">
+                <li class="component">
+                    <div class="icon"><span class="fa fa-bolt"></span></div>
+                    <div  class="actions pull-right">
+                        <a  href="/graphdeploy" class="btn text-success" ><span class="fa fa-bars"> Deploy</span></a>
+                        <a class="btn text-danger" ><span class="fa fa-ban"></span> Delete</a>
+                        <a  href="#" class="btn text-success" ><span class="fa fa-bars"> Graph</span></a>
+                    </div>
+                    <div class="title">Name:<a>
+                        <span th:text="${graph.name}"></span></a>
+                    </div>
+                    <hr/>
+                    <div class="meta">Vendor: <span th:text="${graph.vendor}"></span></div>
+                    <div class="meta">ID: <span th:text="${graph.id}"></span></div>
+                    <div class="meta">Created Date: <span th:text="${graph.createdDate}"></span></div>
+                    <div class="title">
+
+                        <span  class="status-running">Version</span>
+                        <span class="version" th:text="${graph.version}"></span>
+                    </div>
+                </li>
+            </ul>-->
+        </section>
+    </div>
+</div>
+
+<div th:replace="template::footer"></div>
+
+<div th:replace="template::script"></div>
+</body>
+</html>
+<script>
+function myFunction() {
+
+    var x = document.getElementById("alchemy");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>

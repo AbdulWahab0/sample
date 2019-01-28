@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="template::stylesheet"></div>
+
+    <script>
+        $(document).ready(function () {
+        $("#action").hide();
+        $(".atrigger").click(function () {
+            $("#trigger").show();
+            $("#action").hide();
+            $(this).addClass('active')
+            $('.aaction').removeClass('active');
+        });
+        $(".aaction").click(function () {
+            $("#trigger").hide();
+            $("#action").show();
+            $(this).addClass('active')
+            $('.atrigger').removeClass('active');
+        });});
+
+</script>
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+    <div th:replace="template::topmenu"></div>
+    <div th:replace="template::main-sidebar"></div>
+    <div class="content-wrapper">
+        <section style="margin-top: -15px; margin-left: 23px; margin-right: 11px;"id="main">
+            <a href="/createcomponent" class="create"><span class="oi oi-plus"></span> Upload</a>
+            <br>
+            <h3>Components<br/>
+                <small></small>
+            </h3>
+            <ul class="secondary">
+                <!-- li><a id="other" class="active atrigger" th:href="@{/components}">All</a></li-->
+                <li><a id="menu-dashboard" class="active atrigger" th:href="@{/vnf-components}">Virtual Network function</a></li>
+                <li><a id="menu-applications" class="aaction" th:href="@{/components}">Virtual Application function </a></li>
+            </ul>
+         <!--   <ul  style="padding: 14px;" class="card" th:each="component : ${componentlist}">
+                <li class="component">
+                    <div class="icon"><span class="glyphicon glyphicon-asterisk"></span></div>
+                    <div class="actions pull-right">
+                      &lt;!&ndash;  <a th:href="@{/component/{id}/edit(id=${component.cnid})}"><span
+                                class="glyphicon glyphicon-pencil"></span></a>&ndash;&gt;
+                      &lt;!&ndash;  <a  th:href="@{/component/{id}/delete(id=${component.cnid})}" th:onclick="'deleteComponentHandler(\'' + ${component.id} + '\')'" class="btn text-danger">
+                            <span class="glyphicon glyphicon-trash"></span> Delete</a>&ndash;&gt;
+                    </div>
+                    <div class="title"><a th:text="${component.getCNName()}"></a> </div>
+                   &lt;!&ndash; <span class="status-running" th:if="${component.status}">Enabled</span>
+                        <span class="status-runnings" th:unless="${component.status}">Disable</span>
+                    <hr/>&ndash;&gt;
+
+                    <div class="meta">ID: <span th:text="${component.getCNID()}"></span></div>
+                    &lt;!&ndash;<div class="meta">Exposedt Interface: <span>Http</span></div>
+                    <div class="meta">Required Interface: <span> pong</span></div>&ndash;&gt;
+                    &lt;!&ndash;<ul class="label" style="display:inline">
+                        <li class="value" th:text="${component.catageory}"></li>
+                    </ul>&ndash;&gt;
+
+                   &lt;!&ndash; <div class="pull-right" style="position: relative; bottom: 30px;">
+                        <ul class="label" style="display:inline">
+                            <li class="value key"> 	Registration Date</li>
+                            <li class="value exp" th:text="${component.createdDate}"></li></ul>
+                    </div>&ndash;&gt;
+                </li>
+            </ul>-->
+            <ul class="card" th:each="component : ${componentlist}">
+                <li class="component">
+                    <div class="icon"><span class="oi oi-target"></span></div>
+
+                    <div class="actions pull-right">
+                        <a class="btn" th:href="@{'/component-details/' + ${component.getCNID()}}">
+                            <span class="glyphicon glyphicon-align-justify"></span> Details</a>
+                        <a class="btn text-danger">
+                            <span class="glyphicon glyphicon-trash"></span> Delete</a>
+                    </div>
+                    <div class="title">
+                        <a>
+                            <span th:text="${component.getCNName()}"></span></a>
+                        <span class="version">2.2</span></div>
+                   <!-- <a>
+                    <span th:text="${component.getUserName()}"></span></a>-->
+                   <!-- <div class="author" th:text="${component.getUserName()}"></div>-->
+                    <hr/>
+                    <div class="meta">ID: <span th:text="${component.getCNID()}"></span></div>
+                    <div class="desc" th:text="${component.getDescription()}"></div>
+                   <!-- <div class="pull-right" style="position: relative; bottom: 30px;">
+                        <ul class="label" style="display:inline">
+                            <li class="value key"> 	Exposed Interface</li>
+                            <li class="value exp" th:text="${component.getCNName()}"></li>
+                            <li class="value key"> 	Required Interface</li>
+                            <li class="value exp">Pong</li>
+
+                        </ul>
+                    </div>-->
+
+                    <div class="pull-right" style="position: relative; bottom: 30px;">
+                        <ul  class="label" style="display:inline">
+                            <li class="value key">EXP</li>
+                       <!-- <li class="value exp" th:text="${comp}"></li>-->
+                            <li class="value exp" th:text="${endpoints}"></li>
+
+                        </ul><br/>
+
+                <!--        <ul  class="label" style="display:inline">
+                            <li class="value key">REQ</li><li class="value req" th:each="req : ${component.getRequiredChainableEndpoints().getChainableEndpointCategory()}" th:text="${req.getCEPCID()}"></li></ul>-->
+                    </div>
+                   <!-- <ul class="label"><li class="value" th:text="${component.getTag()}"></li></ul>-->
+                </li>
+            </ul>
+        </section>
+    </div>
+    <div th:replace="template::footer"></div>
+    <div th:replace="template::script"></div>
+</div>
+</body>
+</html>
